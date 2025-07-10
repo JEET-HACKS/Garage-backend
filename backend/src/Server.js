@@ -258,7 +258,7 @@ app.get('/bindmechanicsdetails', async (req,resp)=>{
 })
 
 app.get('/ClearVehicleFromService/:id', async (req,resp)=>{
-	var clearVehicle=await Vehicle.findOne({_id:req.params.id});
+	var clearVehicle=await Vehicle.findOne({VehicleNo:req.params.id});
 	resp.send(clearVehicle);
 
 })
@@ -271,7 +271,7 @@ app.post('/addClearVehicleFromService',async (req,resp)=>{
 })
 
 app.delete('/deleteClearVehicleFromService/:id', async (req,resp)=>{
-	   var deleted=await Vehicle.deleteOne({_id:req.params.id});
+	   var deleted=await Vehicle.deleteOne({VehicleNo:req.params.id});
 	   resp.send('Vehicle Clear Successfully');
 })
 
