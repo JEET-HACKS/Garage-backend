@@ -452,6 +452,10 @@ app.get('/GetSomeDetails', async(req,resp)=>{
                                                       	}
                                                       }
 	   	                                          ]);
+	if(InvnAmt.length ==0)
+	   {
+	   	 InvnAmt[0]=0;
+	   }
 	   var TotalAmt=InvnAmt[0].Total;
 	   finalresult=()=>{
 	   	        return{
