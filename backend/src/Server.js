@@ -292,33 +292,36 @@ app.get('/getClearVehicleDetails', async (req,resp)=>{
 })
 
 app.get('/GetVehicleClearDetails/:id', async (req,resp)=>{
-        var cleardata=await clear.findOne({_id:req.params.id});
-        var InvNcount=await Invoice.countDocuments({});
-        console.log(cleardata);
-        if(cleardata)
+        
+        var InvNcount=await  Invoice.countDocuments({});
+        var Invoicedata=await Vehicle.findOne({_id:req.params.id});
+        var EditInvoice=await Invoice.findOne({_id:req.params.id});
+        if(Invoicedata)
         {
-        const arrayInvoice=cleardata?[cleardata]:[];
-        var cost=await services.findOne({_id:cleardata.Service_Type});
-        const costnew=cost?[cost]:[];
-        	finalresult=arrayInvoice.map(vehi=>{
+        	var cost=await services.findOne({_id:Invoicedata.Service_Type});
+        	var costnew=cost?[cost]:[];
+        	console.log(cost);
+        	var Invoices=Invoicedata?[Invoicedata]:[];
+        	finalresult=Invoices.map(vehi=>{
         		                   var mech=costnew.find(mech=>mech._id.toString() === vehi.Service_Type.toString())
         		            return{
         		            	  ...vehi.toObject(),
-        		            	  cost:mech ? mech : null,
+        		            	  cost:mech.Cost ? mech.Cost : 0,
         		            	  InvNo:InvNcount+1
 
         		            };
         	})
-        	console.log(finalresult);
-            resp.send(finalresult);
-        }
-        else{
-        	var Invoicedata=await Invoice.findOne({_id:req.params.id});
-        	console.log(Invoicedata);
+        
         	var InvoiceBind=Invoicedata?[Invoicedata]:[];
-            resp.send(InvoiceBind);
-
+        
+            resp.send(finalresult);
+        }else{
+             var Invoices=EditInvoice?[EditInvoice]:[];
+             resp.send(Invoices);
+             
         }
+       
+      
        
 })
 
