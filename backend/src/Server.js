@@ -307,7 +307,7 @@ app.get('/GetVehicleClearDetails/:id', async (req,resp)=>{
         		            return{
         		            	  ...vehi.toObject(),
         		            	  cost:mech.Cost ? mech.Cost : 0,
-        		            	  InvNo:InvNcount+1
+        		            	  InvoiceNo:InvNcount+1
 
         		            };
         	})
