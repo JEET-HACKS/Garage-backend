@@ -881,13 +881,19 @@ app.post('/SalesPaymentVoucher', async(req,resp)=>{
 		await savedata.validate();
         
 		var newpendingAmt=data.Pending_Amt-data.DebitAmt;
-		data.Pending_Amt=newpendingAmt;
+		if(newpendingAmt <=1)
+		{
+		  data.Pending_Amt=0;	
+		}
+		else{
+		  data.Pending_Amt=newpendingAmt;	
+		}
 		
 		finalresult= await Sale_Invoice_Schema.updateOne({SalesInvn:data.SalesInvn.trim()},{ $set: {Pending_Amt:newpendingAmt}})
 		finalresult = await Sale_Invoice_Schema.find({CustomerName:data.CustomerName.trim()});
 		console.log(finalresult);
 		var total=finalresult.reduce((acc,option)=> acc+option.Pending_Amt,0);
-	    console.log(total);
+	        console.log(total);
 		// var newpendingAmt=data[0].Pending_Amt+total;
 		data.Pending_Amt=total;
 		finalresult = await Sales_Payment_Voucher_Schema.insertMany(req.body);
