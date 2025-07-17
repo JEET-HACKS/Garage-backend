@@ -660,7 +660,13 @@ app.post('/SavePayment', async(req,resp)=>{
 	    	await vehicle.validate();
 	    	
 		    var newpendingAmt=data[0].Pending_Amt-data[0].DebitAmt;
-		    data[0].Pending_Amt=newpendingAmt;
+		    if(newpendingAmt <=1)
+			{
+			  data.Pending_Amt=0;	
+			}
+			else{
+			  data.Pending_Amt=newpendingAmt;	
+			}
 		
 		    finalresult= await Vehicle_purchase_master.updateOne({SupplierInvn:data[0].SupplierInvn.trim()},{ $set: {Pending_Amt:newpendingAmt}})
 		    finalresult = await Vehicle_purchase_master.find({SupplierName:data[0].SupplierName.trim()});
