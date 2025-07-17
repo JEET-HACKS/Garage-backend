@@ -851,7 +851,7 @@ app.post('/SaveVehicleSales', async(req,resp)=>{
 		      finalresult = await Sales_Payment_Voucher_Schema.insertMany(req.body);
 		     // var vehicle_purchase=new Vehicle_purchase_master(Purchase);
 		     // finalresult=await vehicle_purchase.save();
-		     resp.send('Vehicle Purchase Added Successfully');
+		     resp.send('ok');
 		     
 		     // console.log(ChildData);
 		     // var child = ChildData?[ChildData]:[];
