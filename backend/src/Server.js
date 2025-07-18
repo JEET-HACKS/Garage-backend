@@ -1036,6 +1036,11 @@ app.get('/BindStaffDetails/:id', async(req,resp)=>{
          console.log([finalresult]);
 	     resp.send([finalresult]);
 })
+app.get('/StaffBind', async(req,resp)=>{
+	    finalresult=await Staff.find();
+	    
+	    resp.send(finalresult);
+})
 
 app.listen(5000, ()=>{
           console.log("server 5000 is running");
