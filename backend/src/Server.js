@@ -16,6 +16,7 @@ const TestDrive_Entry = require('./db/TestDrive_Schema');
 const Masters = require('./db/Master_Page_Schema');
 const Sale_Invoice_Schema = require('./db/Sales_Invoice_For_Vehicle_Schema');
 const Sales_Payment_Voucher_Schema = require('./db/Sales_Payment_Voucher_Schema');
+const Staff = require('./db/StaffMasterSchema');
 
 const jwt=require('jsonwebtoken');
 const jwtkey="garage786";
@@ -990,6 +991,50 @@ app.post('/SignUpDetails', async(req,resp)=>{
              //console.log({ error: err.message[0] });
              resp.send(errorMessages[0]);
 	     }
+})
+app.post('/AddStaffName/:id', async(req,resp)=>{
+	    var SaveData= new Staff(req.body);   
+	     try{
+	     	  await SaveData.validate();
+              if(req.params.id == "add")
+			    {
+			      await SaveData.save();
+	     	      resp.send("ok");  	
+			    }else{
+		             finalresult= await Staff.deleteOne({_id:req.params.id});
+		             finalresult= await SaveData.save();
+		             resp.send("ok");   	
+			    }
+	     	   
+            
+	     }
+	     catch(err)
+	     {
+	     	 const errorMessages = Object.values(err.errors).map(e => e.message);
+             console.log({ error: errorMessages[0] }); 
+             //console.log({ error: err.message[0] });
+             resp.send(errorMessages[0]);
+	     }
+})
+
+app.get('/GetStaffDetails', async(req,resp)=>{
+	    
+	     finalresult=await Staff.find();
+	     console.log(finalresult);
+	     resp.send(finalresult); 
+	     
+})
+app.delete('/DeleteStaffDetails/:id', async(req,resp)=>{
+	    
+	     finalresult=await Staff.deleteOne({_id:req.params.id});
+	     
+	     resp.send(finalresult); 
+	     
+})
+app.get('/BindStaffDetails/:id', async(req,resp)=>{
+	     finalresult=await Staff.findOne({_id:req.params.id});
+         console.log([finalresult]);
+	     resp.send([finalresult]);
 })
 
 app.listen(5000, ()=>{
