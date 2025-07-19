@@ -856,6 +856,8 @@ app.post('/SaveVehicleSales', async(req,resp)=>{
 			   data2[0].Pending_Amt=total;
 		      }
 		      finalresult = await Sales_Payment_Voucher_Schema.insertMany(req.body);
+		      finalresult = await VehicleInShowRoom.updateOne({_id:data[0].VehicleBrandName.trim()},{$set: {VehicleStatus:"SOLD"}});
+		    
 		     // var vehicle_purchase=new Vehicle_purchase_master(Purchase);
 		     // finalresult=await vehicle_purchase.save();
 		     resp.send('ok');
