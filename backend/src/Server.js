@@ -902,7 +902,13 @@ app.post('/SalesPaymentVoucher', async(req,resp)=>{
 		var total=finalresult.reduce((acc,option)=> acc+option.Pending_Amt,0);
 	        console.log(total);
 		// var newpendingAmt=data[0].Pending_Amt+total;
-		data.Pending_Amt=total;
+		if(total <=1)
+		{
+		  data.Pending_Amt=0;	
+		}
+		else{
+		  data.Pending_Amt=total;	
+		}
 		finalresult = await Sales_Payment_Voucher_Schema.insertMany(req.body);
 		resp.send("ok");
 	    
