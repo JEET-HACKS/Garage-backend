@@ -88,9 +88,14 @@ const path = require('path');
 
 app.post('/login', async (req,resp)=>{
          console.log("ok");
-	if(req.body.UserName && req.body.Password){
+	const { UserName, Password } = req.body;
+	
+	 if (!UserName || !Password) {
+            return resp.status(400).send("Incorrect Username or Password");
+        }
 
-			let user=await User.findOne(req.body);
+	let user=await User.findOne([UserName]);
+	
 			if(user)
 	        {
 		    jwt.sign({user}, jwtkey,{expiresIn:"2h"},(err,token)=>{
@@ -107,11 +112,6 @@ app.post('/login', async (req,resp)=>{
         	 else{
         	 	 resp.send("incorrect UserName Or Password");
         	 }
-
-	}
-	else{
-		resp.send("incorrect UserName Or Password");
-	}
 
 })
 
