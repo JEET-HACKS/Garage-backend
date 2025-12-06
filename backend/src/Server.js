@@ -94,7 +94,9 @@ app.post('/login', async (req,resp)=>{
             return resp.status(400).send("Incorrect Username or Password");
         }
 
-	let user=await User.findOne([UserName]);
+	  let user=await User.findOne({UserName:req.body.UserName,
+								   Password: req.body.Password
+								  });
 	
 			if(user)
 	        {
