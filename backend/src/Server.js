@@ -87,16 +87,14 @@ const path = require('path');
 // jeet
 
 app.post('/login', async (req,resp)=>{
-         console.log("ok");
+        
 	const { UserName, Password } = req.body;
 	
 	 if (!UserName || !Password) {
             return resp.status(400).send("Incorrect Username or Password");
         }
 
-	  let user=await User.findOne({UserName:req.body.UserName,
-								   Password: req.body.Password
-								  });
+	   let user=await User.findOne({UserName:UserName,Password:Password});
 	
 			if(user)
 	        {
